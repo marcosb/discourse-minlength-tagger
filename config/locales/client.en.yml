@@ -1,9 +1,4 @@
 en:
-  js:
-    unhandled_tagger:
-      handled:
-        title: "Handled"
-        help: "Mark topic as handled"
-      unhandle:
-        title: "Unhandle"
-        help: "Mark topic as unhandled"
+  site_settings:
+    minlength_tag: "Tag to add if the first post has a minimum length"
+    minlength_chars: "Size (number of characters) a post must meet to be tagged"

@@ -1,5 +1,8 @@
 plugins:
-  unhandled_tag:
-    default: 'unhandled'
+  minlength_tag:
+    default: ''
     client: true
     hidden: true
+  minlength_chars:
+    default: 0
+    client: true

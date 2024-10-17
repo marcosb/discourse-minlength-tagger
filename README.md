@@ -1,4 +1,4 @@
-## discourse-unhandled-tagger
+## discourse-minlength-tagger
 
-This simple plugin adds the tag "unhandled" to every topic if there is a non-staff reply.
+This simple plugin adds the tag "minlength" to every topic if it meets a certain size minimum.
 
