@@ -16,8 +16,8 @@ after_initialize do
 
     ActiveRecord::Base.transaction do
       topic = post.topic
-      if (post = self.ordered_posts.first)
-        if (post.raw.size > SiteSetting.minlength_chars) && !topic.tags.pluck(:id).include?(tag.id)
+      if (firstPost = self.ordered_posts.first)
+        if (firstPost.raw.size > SiteSetting.minlength_chars) && !topic.tags.pluck(:id).include?(tag.id)
           topic.tags.reload
           topic.tags << tag
           topic.save
