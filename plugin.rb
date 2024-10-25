@@ -16,7 +16,7 @@ after_initialize do
     not_met_tag = (SiteSetting.minlength_not_met_tag.blank?) ? nil : Tag.find_or_create_by!(name: SiteSetting.minlength_not_met_tag)
     exclude_categories = SiteSetting.exclude_categories.present? ? SiteSetting.exclude_categories.split("|").map(&:to_i) : []
 
-    next if (exclude_categories.include?(topic.category_id))
+    next if (exclude_categories.include?(post.topic.category_id))
 
     ActiveRecord::Base.transaction do
       topic = post.topic
