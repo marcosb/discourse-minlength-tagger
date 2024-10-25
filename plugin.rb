@@ -14,10 +14,11 @@ after_initialize do
 
     tag = Tag.find_or_create_by!(name: SiteSetting.minlength_tag)
     not_met_tag = (SiteSetting.minlength_not_met_tag.blank?) ? nil : Tag.find_or_create_by!(name: SiteSetting.minlength_not_met_tag)
+    exclude_categories = SiteSetting.exclude_categories.split("|").map(&:to_i),
 
     ActiveRecord::Base.transaction do
       topic = post.topic
-      if (firstPost = topic.ordered_posts.first)
+      if (not exclude_categories.include?(topic.category_id) && (firstPost = topic.ordered_posts.first))
         if (firstPost.raw.size > SiteSetting.minlength_chars)
           if (!topic.tags.pluck(:id).include?(tag.id))
             topic.tags.reload
