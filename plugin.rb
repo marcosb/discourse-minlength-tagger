@@ -18,7 +18,8 @@ after_initialize do
 
     ActiveRecord::Base.transaction do
       topic = post.topic
-      if (not exclude_categories.include?(topic.category_id) && (firstPost = topic.ordered_posts.first))
+      if (exclude_categories.include?(topic.category_id))
+      elsif (firstPost = topic.ordered_posts.first)
         if (firstPost.raw.size > SiteSetting.minlength_chars)
           if (!topic.tags.pluck(:id).include?(tag.id))
             topic.tags.reload
