@@ -2,6 +2,9 @@ plugins:
   minlength_tag:
     default: ''
     client: true
+  minlength_not_met_tag:
+    default: ''
+    client: true
   minlength_chars:
     default: 0
     client: true
