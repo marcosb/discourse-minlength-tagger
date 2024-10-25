@@ -13,13 +13,20 @@ after_initialize do
     next if post.topic.private_message?
 
     tag = Tag.find_or_create_by!(name: SiteSetting.minlength_tag)
+    not_met_tag = (SiteSetting.minlength_not_met_tag.blank?) ? nil : Tag.find_or_create_by!(name: SiteSetting.minlength_not_met_tag)
 
     ActiveRecord::Base.transaction do
       topic = post.topic
-      if (firstPost = self.ordered_posts.first)
-        if (firstPost.raw.size > SiteSetting.minlength_chars) && !topic.tags.pluck(:id).include?(tag.id)
+      if (firstPost = topic.ordered_posts.first)
+        if (firstPost.raw.size > SiteSetting.minlength_chars)
+          if (!topic.tags.pluck(:id).include?(tag.id))
+            topic.tags.reload
+            topic.tags << tag
+            topic.save
+          end
+        elsif (not_met_tag && !topic.tags.pluck(:id).include?(not_met_tag.id))
           topic.tags.reload
-          topic.tags << tag
+          topic.tags << not_met_tag
           topic.save
         end
       end
